@@ -21,14 +21,16 @@ public class Game extends Thread{
 	private Image noteRouteJImage = new ImageIcon(Main.class.getResource("../images/noteRoute.png")).getImage();
 	private Image noteRouteKImage = new ImageIcon(Main.class.getResource("../images/noteRoute.png")).getImage();
 	private Image noteRouteLImage = new ImageIcon(Main.class.getResource("../images/noteRoute.png")).getImage();
-//	private Image blueFlareImage = new ImageIcon(Main.class.getResource("../images/blueFlare.jpg")).getImage();
+	//	private Image blueFlareImage = new ImageIcon(Main.class.getResource("../images/blueFlare.jpg")).getImage();
 	//private Image judgeImage = new ImageIcon(Main.class.getResource("../images/blueFlare.jpg")).getImage();
 
-	
-	private String titleName; //ÇöÀç ½ÇÇàÇÒ °î ÀÌ¸§
-	private String difficulty; //³­ÀÌµµ
-	private String musicTitle; //À½¾Ç
+
+	private String titleName; //í˜„ì¬ ì‹¤í–‰í•  ê³¡ ì´ë¦„
+	private String difficulty; //ë‚œì´ë„
+	private String musicTitle; //ìŒì•…
 	private Music gameMusic;
+
+//	public int score = 0;
 
 	ArrayList<Note> noteList = new ArrayList<Note>();
 
@@ -36,7 +38,7 @@ public class Game extends Thread{
 		this.titleName = titleName;
 		this.difficulty = difficulty;
 		this.musicTitle = musicTitle;
-		gameMusic = new Music(this.musicTitle, false); //ÇÑ ¹ø¸¸ ½ÇÇàµÇ°í ±× ´ÙÀ½Àº ½ÇÇà ¾ÈµÇ°Ô ÇÏ´Â °Å
+		gameMusic = new Music(this.musicTitle, false); //í•œ ë²ˆë§Œ ì‹¤í–‰ë˜ê³  ê·¸ ë‹¤ìŒì€ ì‹¤í–‰ ì•ˆë˜ê²Œ í•˜ëŠ” ê±°
 	}
 
 	public void screenDraw(Graphics2D g) {
@@ -69,7 +71,7 @@ public class Game extends Thread{
 			}
 		}
 		g.setColor(Color.white);
-		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON); //text±úÁü ¹æÁö
+		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON); //textê¹¨ì§ ë°©ì§€
 		g.setColor(Color.white);
 		g.setFont(new Font("Arial", Font.BOLD, 30));
 		g.drawString(titleName, 20, 702);
@@ -84,13 +86,13 @@ public class Game extends Thread{
 		g.drawString("k", 889, 609);
 		g.drawString("l", 993, 609);
 		g.setFont(new Font("Elephant", Font.BOLD, 30));
-		g.drawString("000000", 565, 702);
+	//	g.drawString(score, 565, 702);
 	}
 
 	public void pressS() { 
 		judge("S");
 		noteRouteSImage = new ImageIcon(Main.class.getResource("../images/noteRoutePressed.png")).getImage();
-		new Music("drumSmall1.mp3", false).start(); //ÇÑ ¹ø ´­·ÈÀ» ¶§ ¹İº¹ÀÌ µÇ¸é ¾ÈµÇ±â ¶§¹®¿¡ false
+		new Music("drumSmall1.mp3", false).start(); //í•œ ë²ˆ ëˆŒë ¸ì„ ë•Œ ë°˜ë³µì´ ë˜ë©´ ì•ˆë˜ê¸° ë•Œë¬¸ì— false
 	}
 	public void releaseS() {
 		noteRouteSImage = new ImageIcon(Main.class.getResource("../images/noteRoute.png")).getImage();
@@ -162,45 +164,31 @@ public class Game extends Thread{
 		gameMusic.close();
 		this.interrupt();
 	}
-	public void dropNotes(String titleName) { //for¹®¿¡ ÀÇÇØ Á¤»óÀûÀ¸·Î ¾Æ·¡ÀûÀ¸·Î ¶³¾îÁü
+	public void dropNotes(String titleName) { //forë¬¸ì— ì˜í•´ ì •ìƒì ìœ¼ë¡œ ì•„ë˜ì ìœ¼ë¡œ ë–¨ì–´ì§
 		Beat[] beats = null;
 		if(titleName.equals("EVERYTHING - IKON") && difficulty.equals("Easy")) {
-			int startTime = 4460 - Main.REACH_TIME * 1000; //½ÃÀÛÇÏ´Â ½Ã°£´ë
-			int gap = 125; //¹ÚÀÚÀÇ °£°İ
-			beats = new Beat[] { //³ëÆ® °³¼ö´Â º¸Åë 200ÀÌ»ó 3000ÀÌÇÏ
-					new Beat(startTime, "S"),
-					new Beat(startTime + gap * 2, "D"),
-					new Beat(startTime + gap * 4, "S"),
-					new Beat(startTime + gap * 6, "D"),
-					new Beat(startTime + gap * 8, "S"),
-					new Beat(startTime + gap * 10, "D"),
-					new Beat(startTime + gap * 12, "S"),
-					new Beat(startTime + gap * 14, "D"),
-					new Beat(startTime + gap * 18, "S"),
-					new Beat(startTime + gap * 20, "D"),
-					new Beat(startTime + gap * 22, "S"),
-					new Beat(startTime + gap * 24, "D"),
-					new Beat(startTime + gap * 26, "J"),
-					new Beat(startTime + gap * 28, "K"),
-					new Beat(startTime + gap * 30, "J"),
-					new Beat(startTime + gap * 32, "K"),
-					new Beat(startTime + gap * 36, "S"),
-					new Beat(startTime + gap * 38, "D"),
-					new Beat(startTime + gap * 40, "S"),
-					new Beat(startTime + gap * 42, "D"),
-					new Beat(startTime + gap * 44, "S"),
-					new Beat(startTime + gap * 46, "D"),
-					new Beat(startTime + gap * 48, "J"),
-					new Beat(startTime + gap * 49, "K"),
-					new Beat(startTime + gap * 50, "L"),
-					new Beat(startTime + gap * 52, "F"),
-					new Beat(startTime + gap * 52, "Space"),
-					new Beat(startTime + gap * 52, "J"),
+			int startTime = 2060 - Main.REACH_TIME * 1000; //ì‹œì‘í•˜ëŠ” ì‹œê°„ëŒ€
+			int gap = 125; //ë°•ìì˜ ê°„ê²©
+			beats = new Beat[] { //ë…¸íŠ¸ ê°œìˆ˜ëŠ” ë³´í†µ 200ì´ìƒ 3000ì´í•˜
+					new Beat(startTime, "Space"),
+					new Beat(startTime + gap * 7, "S"),
+					new Beat(startTime + gap * 7, "L"),
+					new Beat(startTime + gap * 9, "D"),
+					new Beat(startTime + gap * 11, "F"),
+					new Beat(startTime + gap * 14, "J"),
+					new Beat(startTime + gap * 15, "J"),
+					new Beat(startTime + gap * 16, "Space"), 
+					new Beat(startTime + gap * 16, "S"),
+					new Beat(startTime + gap * 18, "F"),
+					new Beat(startTime + gap * 20, "Space"),
+					new Beat(startTime + gap * 21, "J"),
+					new Beat(startTime + gap * 24, "Space"),
+					new Beat(startTime + gap * 27, "Space"),
 			};
 		}
 		else if(titleName.equals("EVERYTHING - IKON") && difficulty.equals("Hard")) {
-			int startTime = 4460 - Main.REACH_TIME * 1000; //½ÃÀÛÇÏ´Â ½Ã°£´ë
-			int gap = 125; //¹ÚÀÚÀÇ °£°İ
+			int startTime = 4460 - Main.REACH_TIME * 1000; //ì‹œì‘í•˜ëŠ” ì‹œê°„ëŒ€
+			int gap = 125; //ë°•ìì˜ ê°„ê²©
 			beats = new Beat[] {
 					new Beat(startTime, "Space"),
 			};
@@ -229,7 +217,7 @@ public class Game extends Thread{
 					new Beat(startTime, "Space"),
 			};
 		}
-		
+
 		int i = 0;
 		gameMusic.start();
 		while(i < beats.length && !isInterrupted()) {
@@ -259,4 +247,22 @@ public class Game extends Thread{
 			}
 		}
 	}
+//	public void judgeEvent(String judge) {
+//		if(judge.equals("Miss")) {
+//			score += 0;
+//		}
+//		else if(judge.equals("Great")) {
+//			score += 4;
+//		}
+//		else if(judge.equals("Perfect")) {
+//			score += 5;
+//		}
+//		else if(judge.equals("Good")) {
+//			score += 3;
+//		}
+//		else if(judge.equals("Early")) {
+//			score += 1;
+//		}
+//
+//	}
 }
